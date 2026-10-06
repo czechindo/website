@@ -54,7 +54,7 @@
 
         .container {
             width: 100%;
-            max-width: 550px;
+            max-width: 580px;
             text-align: center;
         }
 
@@ -154,9 +154,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -173,16 +173,18 @@
         }
 
         .modal-content {
-            background: rgba(0, 0, 0, 0.9);
-            border: 2px solid #ffffff;
-            max-width: 450px;
+            background: rgba(10, 10, 10, 0.95);
+            border: 2px solid rgb(255, 255, 255);
+            max-width: 480px;
             width: 100%;
             padding: 30px 25px;
             text-align: center;
             position: relative;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9);
             transform: translateY(20px);
             transition: transform 0.3s ease;
+            max-height: 85vh;
+            overflow-y: auto;
         }
 
         .modal-overlay.active .modal-content {
@@ -202,7 +204,7 @@
         }
 
         .modal-close:hover {
-            color: #aaaaaa;
+            color: #C00707;
         }
 
         .modal-icon {
@@ -227,8 +229,34 @@
             font-weight: 400;
         }
 
+        /* Modal CTA Button (Service Only) */
+        .modal-cta-btn {
+            display: none;
+            margin-top: 20px;
+            padding: 12px 20px;
+            background: #C00707;
+            color: #ffffff;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .modal-cta-btn.show {
+            display: inline-block;
+        }
+
+        .modal-cta-btn:hover {
+            background: #ffffff;
+            color: #000000;
+        }
+
         /* ==========================================================================
-           5. INTRODUCTION & CONTENT SECTIONS
+           5. INTRODUCTION & DIVIDER
            ========================================================================== */
         .intro-box {
             background: rgba(0, 0, 0, 0.55);
@@ -259,7 +287,7 @@
             display: flex;
             align-items: center;
             text-align: center;
-            margin: 28px 0;
+            margin: 32px 0 24px 0;
             color: #ffffff;
             font-size: 0.85rem;
             letter-spacing: 3px;
@@ -300,7 +328,143 @@
             border: 0;
         }
 
-        /* Articles / Medium Section */
+        /* ==========================================================================
+           6. COMPACT & PRECISE SERVICES SECTION (2x2 GRID)
+           ========================================================================== */
+        .services-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        @media (max-width: 480px) {
+            .services-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .service-feature-card {
+            position: relative;
+            background: linear-gradient(135deg, rgba(15, 15, 15, 0.85) 0%, rgba(5, 5, 5, 0.95) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            padding: 12px 16px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            overflow: hidden;
+            transition: all 0.25s ease;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Glowing Accent line at the top of each card */
+        .service-feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: #C00707;
+            transition: width 0.3s ease;
+        }
+
+        .service-feature-card:hover::before {
+            width: 100%;
+        }
+
+        .service-feature-card:hover {
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Large Background Numbering - Compact */
+        .service-bg-num {
+            position: absolute;
+            right: 12px;
+            bottom: -6px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.04);
+            line-height: 1;
+            user-select: none;
+            pointer-events: none;
+            transition: color 0.3s ease;
+        }
+
+        .service-feature-card:hover .service-bg-num {
+            color: rgba(192, 7, 7, 0.12);
+        }
+
+        .service-card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 4px;
+        }
+
+        .service-icon-box {
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            color: #ffffff;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .service-feature-card:hover .service-icon-box {
+            background: #C00707;
+            border-color: #C00707;
+            color: #ffffff;
+        }
+
+        .service-card-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.95rem;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: #ffffff;
+        }
+
+        .service-card-desc {
+            font-size: 0.72rem;
+            color: #cccccc;
+            line-height: 1.4;
+            margin-bottom: 6px;
+            max-width: 92%;
+        }
+
+        .service-action-link {
+            font-size: 0.65rem;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #ffffff;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: gap 0.2s ease, color 0.2s ease;
+        }
+
+        .service-feature-card:hover .service-action-link {
+            color: #ffffff;
+            gap: 9px;
+        }
+
+        /* ==========================================================================
+           7. ARTICLES & SOCIAL LINKS
+           ========================================================================== */
         .articles-container {
             display: flex;
             flex-direction: column;
@@ -501,7 +665,7 @@
         }
 
         /* ==========================================================================
-           6. PARTNERS SLIDER
+           8. PARTNERS SLIDER
            ========================================================================== */
         .partners-slider-wrapper {
             overflow: hidden;
@@ -576,7 +740,7 @@
         }
 
         /* ==========================================================================
-           7. FLOATING CHAT ASSISTANT WIDGET (WARNA: #C00707)
+           9. FLOATING CHAT WIDGET
            ========================================================================== */
         .chat-widget-btn {
             position: fixed;
@@ -585,9 +749,9 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: #C00707; /* WARNA BARU */
+            background: #C00707;
             border: 2px solid #C00707;
-            color: #ffffff; /* IKON WARNA PUTIH */
+            color: #ffffff;
             font-size: 1.3rem;
             display: flex;
             align-items: center;
@@ -600,8 +764,8 @@
 
         .chat-widget-btn:hover {
             transform: scale(1.1);
-            background: #142588;
-            border-color: #142588;
+            background: #990505;
+            border-color: #990505;
         }
 
         .chat-badge {
@@ -827,19 +991,19 @@
         }
 
         /* ==========================================================================
-           8. MUSIC PLAYER CONTROL (UKURAN DIKECILKAN)
+           10. MUSIC PLAYER CONTROL
            ========================================================================== */
         .music-btn {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            width: 36px;  /* DIPERKECIL dari 42px */
-            height: 36px; /* DIPERKECIL dari 42px */
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             background: rgba(0, 0, 0, 0.75);
             border: 1.5px solid rgba(255, 255, 255, 0.8);
             color: #ffffff;
-            font-size: 0.8rem; /* UKURAN IKON DIPERKECIL */
+            font-size: 0.8rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -884,12 +1048,12 @@
 </head>
 <body>
 
-    <!-- CONTROL MUSIC BUTTON (DIKECILKAN) -->
+    <!-- CONTROL MUSIC BUTTON -->
     <button class="music-btn" id="musicToggle" onclick="toggleAudio()" title="Mute/Unmute Music" aria-label="Toggle Audio">
         <i class="fa-solid fa-volume-xmark" id="musicIcon"></i>
     </button>
 
-    <!-- FLOATING CHAT WIDGET BUTTON (WARNA BARU #C00707) -->
+    <!-- FLOATING CHAT WIDGET BUTTON -->
     <button class="chat-widget-btn" id="chatWidgetBtn" onclick="toggleChatWindow()" title="Collaboration Chat Assistant" aria-label="Open Chat">
         <span class="chat-badge"></span>
         <i class="fa-solid fa-comments" id="chatWidgetIcon"></i>
@@ -941,6 +1105,7 @@
             <div class="modal-icon" id="modalIconDisplay"></div>
             <h2 class="modal-title" id="modalTitleDisplay"></h2>
             <p class="modal-text" id="modalTextDisplay"></p>
+            <a href="#collabForm" id="modalCtaBtn" onclick="closeModal()" class="modal-cta-btn">Ajukan Kolaborasi</a>
         </div>
     </div>
 
@@ -988,6 +1153,73 @@
                 referrerpolicy="strict-origin-when-cross-origin"
                 allowfullscreen>
             </iframe>
+        </div>
+
+        <!-- OUR SERVICES SECTION (COMPACT & PRECISE - 2x2 GRID) -->
+        <div class="divider">
+            <span>OUR SERVICES</span>
+        </div>
+
+        <div class="services-container">
+            <!-- Service 1 -->
+            <div class="service-feature-card" onclick="openModal('service_brand')">
+                <span class="service-bg-num">01</span>
+                <div>
+                    <div class="service-card-header">
+                        <div class="service-icon-box">
+                            <i class="fa-solid fa-bullhorn"></i>
+                        </div>
+                        <h3 class="service-card-title">Brand Integration</h3>
+                    </div>
+                    <p class="service-card-desc">Authentic product placements, sponsored vlog segments, and dedicated brand stories tailored for YouTube & Social Media.</p>
+                </div>
+                <span class="service-action-link">EXPLORE DETAILS <i class="fa-solid fa-arrow-right"></i></span>
+            </div>
+
+            <!-- Service 2 -->
+            <div class="service-feature-card" onclick="openModal('service_destination')">
+                <span class="service-bg-num">02</span>
+                <div>
+                    <div class="service-card-header">
+                        <div class="service-icon-box">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                        </div>
+                        <h3 class="service-card-title">Destination Coverage</h3>
+                    </div>
+                    <p class="service-card-desc">Showcasing hotels, tourism boards, city highlights, and cultural spots across the Czech Republic & Indonesia.</p>
+                </div>
+                <span class="service-action-link">EXPLORE DETAILS <i class="fa-solid fa-arrow-right"></i></span>
+            </div>
+
+            <!-- Service 3 -->
+            <div class="service-feature-card" onclick="openModal('service_digital')">
+                <span class="service-bg-num">03</span>
+                <div>
+                    <div class="service-card-header">
+                        <div class="service-icon-box">
+                            <i class="fa-solid fa-camera-retro"></i>
+                        </div>
+                        <h3 class="service-card-title">Digital Media Creation</h3>
+                    </div>
+                    <p class="service-card-desc">Cinematic video production, short-form reels/TikTok content, and professional photography for corporate campaigns.</p>
+                </div>
+                <span class="service-action-link">EXPLORE DETAILS <i class="fa-solid fa-arrow-right"></i></span>
+            </div>
+
+            <!-- Service 4 -->
+            <div class="service-feature-card" onclick="openModal('service_consulting')">
+                <span class="service-bg-num">04</span>
+                <div>
+                    <div class="service-card-header">
+                        <div class="service-icon-box">
+                            <i class="fa-solid fa-earth-europe"></i>
+                        </div>
+                        <h3 class="service-card-title">Cross Cultural Consulting</h3>
+                    </div>
+                    <p class="service-card-desc">Bridging European and Southeast Asian perspectives to craft resonant storytelling and cross-border campaigns.</p>
+                </div>
+                <span class="service-action-link">EXPLORE DETAILS <i class="fa-solid fa-arrow-right"></i></span>
+            </div>
         </div>
 
         <!-- MEDIUM ARTICLES SECTION -->
@@ -1190,23 +1422,50 @@
         setInterval(updateText, 4500);
 
         /* ==========================================================================
-           2. VISION POP-UP MODAL DATA & LOGIC
+           2. VISION POP-UP MODAL DATA & LOGIC (PRECISE SEPARATION)
            ========================================================================== */
         const visionData = {
             vlog: {
                 icon: "fa-solid fa-video",
                 title: "Vlog",
-                text: "Through Vlog, we capture everyday moments, personal experiences, and stories from life between two cultures, offering an authentic perspective through our own lens."
+                text: "Through Vlog, we capture everyday moments, personal experiences, and stories from life between two cultures, offering an authentic perspective through our own lens.",
+                isService: false
             },
             travel: {
                 icon: "fa-solid fa-plane",
                 title: "Travel",
-                text: "Through Travel, we explore new destinations, discover local cultures, and experience the people, places, and stories that make every journey worth remembering."
+                text: "Through Travel, we explore new destinations, discover local cultures, and experience the people, places, and stories that make every journey worth remembering.",
+                isService: false
             },
             culture: {
                 icon: "fa-solid fa-masks-theater",
                 title: "Culture",
-                text: "Through Culture, we explore traditions, lifestyles, values, and everyday experiences that shape how people live, connect, and see the world."
+                text: "Through Culture, we explore traditions, lifestyles, values, and everyday experiences that shape how people live, connect, and see the world.",
+                isService: false
+            },
+            service_brand: {
+                icon: "fa-solid fa-bullhorn",
+                title: "Brand Integration",
+                text: "We naturally integrate brands, products, and services into our video content, short reels, and stories, ensuring authentic engagement with our audience across platforms.",
+                isService: true
+            },
+            service_destination: {
+                icon: "fa-solid fa-map-location-dot",
+                title: "Destination Coverage",
+                text: "Promoting tourism boards, resorts, experiences, and local attractions across the Czech Republic and Indonesia with high-quality visual storytelling.",
+                isService: true
+            },
+            service_digital: {
+                icon: "fa-solid fa-camera-retro",
+                title: "Digital Media Creation",
+                text: "Providing professional videography, photography, and creative content tailored for corporate media, brands, and collaborative promotional campaigns.",
+                isService: true
+            },
+            service_consulting: {
+                icon: "fa-solid fa-earth-europe",
+                title: "Cross Cultural Consulting",
+                text: "Leveraging our unique background to help brands navigate cross cultural communication and build meaningful engagement between European and Southeast Asian markets.",
+                isService: true
             }
         };
 
@@ -1215,12 +1474,21 @@
             const iconDisplay = document.getElementById('modalIconDisplay');
             const titleDisplay = document.getElementById('modalTitleDisplay');
             const textDisplay = document.getElementById('modalTextDisplay');
+            const ctaBtn = document.getElementById('modalCtaBtn');
 
             const data = visionData[category];
             if (data && modal) {
                 iconDisplay.className = data.icon + " modal-icon";
                 titleDisplay.textContent = data.title;
                 textDisplay.textContent = data.text;
+                
+                // HANYA tampilkan tombol CTA jika diklik dari section Service
+                if (data.isService) {
+                    ctaBtn.classList.add('show');
+                } else {
+                    ctaBtn.classList.remove('show');
+                }
+
                 modal.classList.add('active');
                 modal.setAttribute('aria-hidden', 'false');
             }
@@ -1380,7 +1648,7 @@
                 message = message.substring(0, 800) + "... [Pesan dipotong]";
             }
 
-            const recipient = "risyadrosyidi@gmail.com";
+            const recipient = CONTACT_CONFIG.emailAddress;
             const subject = encodeURIComponent(`Collaboration Inquiry from ${name}`);
             const body = encodeURIComponent(`Name/Company: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
 
