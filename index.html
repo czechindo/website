@@ -36,6 +36,15 @@
             background-color: #000000;
         }
 
+        /* PERUBAHAN GLOBAL: Semua paragraf dan teks deskripsi dibuat Rata Kanan-Kiri & Device Friendly */
+        p, .intro-text, .service-card-desc, .article-desc, .modal-text {
+            text-align: justify;
+            text-justify: inter-word;
+            -webkit-hyphens: auto;
+            -ms-hyphens: auto;
+            hyphens: auto;
+        }
+
         /* Background image with grayscale overlay */
         body::before {
             content: '';
@@ -106,6 +115,7 @@
             letter-spacing: 2px;
             text-transform: uppercase;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+            text-align: center;
         }
 
         /* ==========================================================================
@@ -219,6 +229,7 @@
             letter-spacing: 2px;
             text-transform: uppercase;
             margin-bottom: 12px;
+            text-align: center;
         }
 
         .modal-text {
@@ -265,7 +276,6 @@
             margin-bottom: 25px;
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
-            text-align: center;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
         }
 
@@ -405,7 +415,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
         .service-icon-box {
@@ -441,8 +451,8 @@
             font-size: 0.72rem;
             color: #cccccc;
             line-height: 1.4;
-            margin-bottom: 6px;
-            max-width: 92%;
+            margin-bottom: 8px;
+            max-width: 100%;
         }
 
         .service-action-link {
@@ -886,7 +896,8 @@
             max-width: 85%;
             padding: 10px 14px;
             border-radius: 12px;
-            word-wrap: break-word;
+            word-wrap: break-wrap;
+            word-break: break-word;
         }
 
         .chat-msg.bot {
@@ -895,6 +906,7 @@
             color: #ffffff;
             align-self: flex-start;
             border-bottom-left-radius: 2px;
+            text-align: left;
         }
 
         .chat-msg.user {
@@ -903,6 +915,7 @@
             align-self: flex-end;
             font-weight: 500;
             border-bottom-right-radius: 2px;
+            text-align: left;
         }
 
         .chat-actions {
@@ -1105,7 +1118,7 @@
             <div class="modal-icon" id="modalIconDisplay"></div>
             <h2 class="modal-title" id="modalTitleDisplay"></h2>
             <p class="modal-text" id="modalTextDisplay"></p>
-            <a href="#collabForm" id="modalCtaBtn" onclick="closeModal()" class="modal-cta-btn">Let’s Collaborate</a>
+            <a href="#collabForm" id="modalCtaBtn" onclick="closeModal()" class="modal-cta-btn">Ajukan Kolaborasi</a>
         </div>
     </div>
 
@@ -1214,9 +1227,9 @@
                         <div class="service-icon-box">
                             <i class="fa-solid fa-earth-europe"></i>
                         </div>
-                        <h3 class="service-card-title">Cross Cultural Consulting</h3>
+                        <h3 class="service-card-title">Cultural Consulting</h3>
                     </div>
-                    <p class="service-card-desc">Bridging European and Southeast Asian perspectives to craft resonant storytelling and cross-border campaigns.</p>
+                    <p class="service-card-desc">Bridging European and Southeast Asian perspectives to craft resonant storytelling and cross border campaigns.</p>
                 </div>
                 <span class="service-action-link">EXPLORE DETAILS <i class="fa-solid fa-arrow-right"></i></span>
             </div>
@@ -1463,7 +1476,7 @@
             },
             service_consulting: {
                 icon: "fa-solid fa-earth-europe",
-                title: "Cross Cultural Consulting",
+                title: "Cultural Consulting",
                 text: "Leveraging our unique background to help brands navigate cross cultural communication and build meaningful engagement between European and Southeast Asian markets.",
                 isService: true
             }
@@ -1482,7 +1495,6 @@
                 titleDisplay.textContent = data.title;
                 textDisplay.textContent = data.text;
                 
-                // HANYA tampilkan tombol CTA jika diklik dari section Service
                 if (data.isService) {
                     ctaBtn.classList.add('show');
                 } else {
