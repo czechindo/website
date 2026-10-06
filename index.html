@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pozdrav z Czechindo</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caesar+Dressing&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ==========================================================================
+           1. RESET & BASE STYLES
+           ========================================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            position: relative;
+            background-color: #000000;
+        }
+
+        /* Background image with grayscale overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('NZ6_7525.JPG');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            filter: grayscale(100%) brightness(1.05) contrast(1.1);
+            z-index: -1;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 550px;
+            text-align: center;
+        }
+
+        /* ==========================================================================
+           2. BRAND HEADER & SVG TEXT
+           ========================================================================== */
+        .brand-box {
+            border: 4px solid #ffffff;
+            padding: 10px 15px;
+            width: 340px;
+            max-width: 100%;
+            margin: 0 auto 20px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80px;
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .brand-svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .brand-title {
+            font-family: 'Caesar Dressing', cursive;
+            font-size: 45px;
+            fill: #ffffff;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .brand-title.fade-out {
+            opacity: 0;
+            transform: translateY(-8px);
+        }
+
+        .tagline {
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+        }
+
+        /* ==========================================================================
+           3. CIRCLE NAVIGATION ICONS
+           ========================================================================== */
+        .circle-icons {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 25px;
+        }
+
+        .circle-icon-item {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: #ffffff;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            cursor: pointer;
+            outline: none;
+        }
+
+        .circle-icon-item:hover, 
+        .circle-icon-item:focus {
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.25);
+        }
+
+        /* ==========================================================================
+           4. MODAL POP-UP
+           ========================================================================== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #ffffff;
+            max-width: 450px;
+            width: 100%;
+            padding: 30px 25px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .modal-close:hover {
+            color: #aaaaaa;
+        }
+
+        .modal-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .modal-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .modal-text {
+            font-size: 0.85rem;
+            color: #dddddd;
+            line-height: 1.6;
+            letter-spacing: 0.5px;
+            font-weight: 400;
+        }
+
+        /* ==========================================================================
+           5. INTRODUCTION & CONTENT SECTIONS
+           ========================================================================== */
+        .intro-box {
+            background: rgba(0, 0, 0, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 18px 20px;
+            margin-bottom: 25px;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .intro-text {
+            font-size: 0.82rem;
+            color: #dddddd;
+            line-height: 1.6;
+            letter-spacing: 0.5px;
+            font-weight: 400;
+        }
+
+        .intro-text b, 
+        .intro-text strong {
+            font-weight: 700;
+            font-style: italic;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 28px 0;
+            color: #ffffff;
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+        }
+
+        .divider::before, 
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .divider span {
+            padding: 0 15px;
+            font-weight: 600;
+        }
+
+        /* Video Container */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: #000000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Articles / Medium Section */
+        .articles-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .article-card {
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 18px 20px;
+            text-decoration: none;
+            color: #ffffff;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .article-card:hover, 
+        .article-card:focus {
+            border-color: #ffffff;
+            background: rgba(0, 0, 0, 0.88);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .article-tag {
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #aaaaaa;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .article-tag i {
+            font-size: 0.85rem;
+        }
+
+        .article-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            line-height: 1.3;
+            text-transform: uppercase;
+        }
+
+        .article-desc {
+            font-size: 0.78rem;
+            color: #cccccc;
+            line-height: 1.5;
+            font-weight: 400;
+        }
+
+        .article-readmore {
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-top: 4px;
+            font-weight: 600;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .loading-text {
+            font-size: 0.85rem;
+            color: #aaaaaa;
+            text-align: center;
+            padding: 20px 0;
+            letter-spacing: 1px;
+        }
+
+        /* Social Links */
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .btn-link {
+            width: 100%;
+            padding: 16px;
+            background: #ffffff;
+            color: #000000;
+            text-decoration: none;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-link i {
+            font-size: 1.25rem;
+            width: 24px;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .btn-link:hover, 
+        .btn-link:focus {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-outline {
+            background: rgba(0, 0, 0, 0.5);
+            color: #ffffff;
+            border: 2px solid #ffffff;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        .btn-outline:hover, 
+        .btn-outline:focus {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+            margin-bottom: 25px;
+        }
+
+        .input-field, 
+        .textarea-field {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            background: rgba(0, 0, 0, 0.65);
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            outline: none;
+            transition: border-color 0.2s ease, background 0.2s ease;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        .input-field::placeholder, 
+        .textarea-field::placeholder {
+            color: #aaaaaa;
+        }
+
+        .input-field:focus, 
+        .textarea-field:focus {
+            border-color: #ffffff;
+            background: rgba(0, 0, 0, 0.85);
+        }
+
+        .textarea-field {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #ffffff;
+            color: #ffffff;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        .btn-submit:hover, 
+        .btn-submit:focus {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        /* ==========================================================================
+           6. PARTNERS SLIDER
+           ========================================================================== */
+        .partners-slider-wrapper {
+            overflow: hidden;
+            width: 100%;
+            margin-bottom: 25px;
+            position: relative;
+            mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+        }
+
+        .partners-slider-track {
+            display: flex;
+            gap: 30px;
+            width: max-content;
+            align-items: center;
+            animation: scrollPartners 18s linear infinite;
+        }
+
+        .partners-slider-wrapper:hover .partners-slider-track {
+            animation-play-state: paused;
+        }
+
+        .partner-card {
+            background: transparent;
+            border: none;
+            padding: 10px 0;
+            width: 100px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #ffffff;
+            transition: transform 0.3s ease;
+        }
+
+        .partner-card:hover {
+            transform: scale(1.1);
+        }
+
+        .partner-logo {
+            max-width: 100%;
+            max-height: 32px;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+            opacity: 0.65;
+            transition: opacity 0.3s ease, filter 0.3s ease;
+        }
+
+        .partner-card:hover .partner-logo {
+            opacity: 1;
+        }
+
+        .partner-name {
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.6);
+            transition: color 0.3s ease;
+        }
+
+        .partner-card:hover .partner-name {
+            color: #ffffff;
+        }
+
+        @keyframes scrollPartners {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* ==========================================================================
+           7. FLOATING CHAT ASSISTANT WIDGET (WARNA: #C00707)
+           ========================================================================== */
+        .chat-widget-btn {
+            position: fixed;
+            bottom: 70px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #C00707; /* WARNA BARU */
+            border: 2px solid #C00707;
+            color: #ffffff; /* IKON WARNA PUTIH */
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 9998;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .chat-widget-btn:hover {
+            transform: scale(1.1);
+            background: #142588;
+            border-color: #142588;
+        }
+
+        .chat-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 12px;
+            height: 12px;
+            background-color: #22c55e;
+            border: 2px solid #000000;
+            border-radius: 50%;
+        }
+
+        .chat-window {
+            position: fixed;
+            bottom: 130px;
+            right: 20px;
+            width: 350px;
+            max-width: calc(100vw - 40px);
+            height: 480px;
+            background: rgba(10, 10, 10, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 9998;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px) scale(0.95);
+            transition: all 0.3s ease;
+        }
+
+        .chat-window.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .chat-header {
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chat-title-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chat-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #C00707;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        .chat-header-info h4 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .chat-header-info p {
+            font-size: 0.65rem;
+            color: #22c55e;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .chat-header-info p::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: #22c55e;
+            border-radius: 50%;
+        }
+
+        .chat-close {
+            background: transparent;
+            border: none;
+            color: #aaaaaa;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .chat-close:hover {
+            color: #ffffff;
+        }
+
+        .chat-body {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+
+        .chat-msg {
+            max-width: 85%;
+            padding: 10px 14px;
+            border-radius: 12px;
+            word-wrap: break-word;
+        }
+
+        .chat-msg.bot {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+        }
+
+        .chat-msg.user {
+            background: #ffffff;
+            color: #000000;
+            align-self: flex-end;
+            font-weight: 500;
+            border-bottom-right-radius: 2px;
+        }
+
+        .chat-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 8px;
+            width: 100%;
+        }
+
+        .chat-action-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 12px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-wa {
+            background: #25D366;
+            color: #ffffff;
+        }
+
+        .btn-wa:hover {
+            background: #1ebc57;
+            transform: translateY(-1px);
+        }
+
+        .btn-mail {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        .btn-mail:hover {
+            background: #dddddd;
+            transform: translateY(-1px);
+        }
+
+        .chat-input-area {
+            padding: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 10px 12px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.78rem;
+            outline: none;
+            border-radius: 4px;
+        }
+
+        .chat-input:focus {
+            border-color: #ffffff;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .chat-send-btn {
+            padding: 10px 14px;
+            background: #ffffff;
+            border: none;
+            color: #000000;
+            cursor: pointer;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            transition: background 0.2s ease;
+        }
+
+        .chat-send-btn:hover {
+            background: #dddddd;
+        }
+
+        /* ==========================================================================
+           8. MUSIC PLAYER CONTROL (UKURAN DIKECILKAN)
+           ========================================================================== */
+        .music-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 36px;  /* DIPERKECIL dari 42px */
+            height: 36px; /* DIPERKECIL dari 42px */
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.75);
+            border: 1.5px solid rgba(255, 255, 255, 0.8);
+            color: #ffffff;
+            font-size: 0.8rem; /* UKURAN IKON DIPERKECIL */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 999;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        .music-btn:hover {
+            transform: scale(1.1);
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+
+        .bg-music-player {
+            position: fixed;
+            bottom: -100px;
+            right: -100px;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        footer {
+            margin-top: 35px;
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-align: center;
+            width: 100%;
+            display: block;
+            line-height: 1.4;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CONTROL MUSIC BUTTON (DIKECILKAN) -->
+    <button class="music-btn" id="musicToggle" onclick="toggleAudio()" title="Mute/Unmute Music" aria-label="Toggle Audio">
+        <i class="fa-solid fa-volume-xmark" id="musicIcon"></i>
+    </button>
+
+    <!-- FLOATING CHAT WIDGET BUTTON (WARNA BARU #C00707) -->
+    <button class="chat-widget-btn" id="chatWidgetBtn" onclick="toggleChatWindow()" title="Collaboration Chat Assistant" aria-label="Open Chat">
+        <span class="chat-badge"></span>
+        <i class="fa-solid fa-comments" id="chatWidgetIcon"></i>
+    </button>
+
+    <!-- FLOATING CHAT WINDOW -->
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <div class="chat-title-group">
+                <div class="chat-avatar">CZ</div>
+                <div class="chat-header-info">
+                    <h4>CZECHINDO</h4>
+                    <p>Online • Admin Business Support</p>
+                </div>
+            </div>
+            <button class="chat-close" onclick="toggleChatWindow()" aria-label="Close Chat">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        
+        <div class="chat-body" id="chatBody">
+            <div class="chat-msg bot">
+                Ahoj from Czechindo 👋 Terima kasih telah menghubungi kami, let’s start something interesting!
+            </div>
+            <div class="chat-msg bot">
+                Got a brand, project, event, or place you’d love us to feature? Tell us about your collaboration idea below! ✨
+            </div>
+        </div>
+
+        <form class="chat-input-area" onsubmit="handleChatSubmit(event)">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Ketik pesan kolaborasi..." required autocomplete="off">
+            <button type="submit" class="chat-send-btn" aria-label="Send">
+                <i class="fa-solid fa-paper-plane"></i>
+            </button>
+        </form>
+    </div>
+
+    <!-- YOUTUBE MUSIC PLAYER (HIDDEN) -->
+    <div class="bg-music-player">
+        <div id="youtube-audio-player"></div>
+    </div>
+
+    <!-- POP-UP MODAL -->
+    <div class="modal-overlay" id="visionModal" onclick="closeModalOnOutside(event)" aria-hidden="true">
+        <div class="modal-content" role="dialog" aria-modal="true">
+            <button class="modal-close" onclick="closeModal()" aria-label="Close modal">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="modal-icon" id="modalIconDisplay"></div>
+            <h2 class="modal-title" id="modalTitleDisplay"></h2>
+            <p class="modal-text" id="modalTextDisplay"></p>
+        </div>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="container">
+        
+        <!-- BRAND BOX (SVG AUTO-FIT TEXT) -->
+        <div class="brand-box">
+            <svg viewBox="0 0 300 50" class="brand-svg">
+                <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" id="brandTitle" class="brand-title">
+                    CZECHINDO
+                </text>
+            </svg>
+        </div>
+
+        <p class="tagline">LIVING LIFE BETWEEN CULTURES</p>
+
+        <!-- CATEGORY CIRCLE ICONS -->
+        <div class="circle-icons">
+            <button type="button" class="circle-icon-item" title="Vlog" aria-label="Vlog" onclick="openModal('vlog')">
+                <i class="fa-solid fa-video"></i>
+            </button>
+            <button type="button" class="circle-icon-item" title="Travel" aria-label="Travel" onclick="openModal('travel')">
+                <i class="fa-solid fa-plane"></i>
+            </button>
+            <button type="button" class="circle-icon-item" title="Culture" aria-label="Culture" onclick="openModal('culture')">
+                <i class="fa-solid fa-masks-theater"></i>
+            </button>
+        </div>
+
+        <!-- SHORT DESCRIPTION INTRODUCTION -->
+        <div class="intro-box">
+            <p class="intro-text">
+                Welcome to our digital space, <b><i>CZECHINDO</i></b> is a creative digital media platform focused on Vlog, Travel, and Culture, exploring life between the Czech Republic and Indonesia through the personal experiences and perspectives of <b><i>Risyad</i></b> and <b><i>Emma</i></b>. From everyday life and travel to cultural encounters and discoveries, we create visual stories that reflect the experience of living between cultures.
+            </p>
+        </div>
+
+        <!-- VIDEO EMBED -->
+        <div class="video-container">
+            <iframe 
+                src="https://www.youtube.com/embed?listType=playlist&list=UULFjR7ukWcVyLvPgqS5Tadq5A" 
+                title="Czechindo YouTube Videos"
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen>
+            </iframe>
+        </div>
+
+        <!-- MEDIUM ARTICLES SECTION -->
+        <div class="divider">
+            <span>LATEST ARTICLES</span>
+        </div>
+
+        <div class="articles-container" id="mediumArticles">
+            <div class="loading-text"><i class="fa-solid fa-spinner fa-spin"></i> MEMUAT ARTIKEL MEDIUM...</div>
+        </div>
+
+        <!-- SOCIAL LINKS SECTION -->
+        <div class="divider">
+            <span>SOCIAL LINKS</span>
+        </div>
+
+        <div class="links-container">
+            <a href="https://www.youtube.com/@risyadsyahrosyidi" target="_blank" rel="noopener noreferrer" class="btn-link">
+                <i class="fa-brands fa-youtube"></i> YouTube
+            </a>
+            <a href="https://www.instagram.com/czechindo/" target="_blank" rel="noopener noreferrer" class="btn-link btn-outline">
+                <i class="fa-brands fa-instagram"></i> Instagram
+            </a>
+            <a href="https://www.tiktok.com/@czech.indo" target="_blank" rel="noopener noreferrer" class="btn-link">
+                <i class="fa-brands fa-tiktok"></i> TikTok
+            </a>
+            <a href="https://risyadrosyidi.medium.com/" target="_blank" rel="noopener noreferrer" class="btn-link btn-outline">
+                <i class="fa-brands fa-medium"></i> Medium
+            </a>
+            <a href="https://yourportfolio.com" target="_blank" rel="noopener noreferrer" class="btn-link">
+                <i class="fa-solid fa-briefcase"></i> Portfolio
+            </a>
+        </div>
+
+        <!-- COLLABORATION FORM SECTION -->
+        <div class="divider">
+            <span>BUSINESS COLLABORATION</span>
+        </div>
+
+        <form class="contact-form" id="collabForm" onsubmit="sendEmailClient(event)">
+            <input type="text" class="input-field" id="clientName" name="Name_or_Company" placeholder="YOUR NAME / COMPANY" required>
+            <input type="email" class="input-field" id="clientEmail" name="Email" placeholder="YOUR EMAIL ADDRESS" required>
+            <textarea class="textarea-field" id="clientMessage" name="Message" placeholder="YOUR MESSAGE / PROPOSAL" required maxlength="1000"></textarea>
+            <button type="submit" class="btn-submit">SEND MESSAGE</button>
+        </form>
+
+        <!-- OUR PARTNERS SECTION -->
+        <div class="divider">
+            <span>OUR PARTNERS</span>
+        </div>
+
+        <div class="partners-slider-wrapper">
+            <div class="partners-slider-track">
+                <!-- SET 1: Original Brands -->
+                <a href="#" class="partner-card" target="_blank" rel="noopener noreferrer">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" class="partner-logo">
+                    <span class="partner-name">Google</span>
+                </a>
+                <a href="#" class="partner-card" target="_blank" rel="noopener noreferrer">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg" alt="Nike" class="partner-logo">
+                    <span class="partner-name">Nike</span>
+                </a>
+                <a href="#" class="partner-card" target="_blank" rel="noopener noreferrer">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg" alt="Adidas" class="partner-logo">
+                    <span class="partner-name">Adidas</span>
+                </a>
+                <a href="#" class="partner-card" target="_blank" rel="noopener noreferrer">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple" class="partner-logo">
+                    <span class="partner-name">Apple</span>
+                </a>
+                <a href="#" class="partner-card" target="_blank" rel="noopener noreferrer">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix" class="partner-logo">
+                    <span class="partner-name">Netflix</span>
+                </a>
+                <a href="#" class="partner-card" target="_blank" rel="noopener noreferrer">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify" class="partner-logo">
+                    <span class="partner-name">Spotify</span>
+                </a>
+
+                <!-- SET 2: Duplicates for Infinite Loop -->
+                <a href="#" class="partner-card" target="_blank" rel="noopener noreferrer">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" class="partner-logo">
+                    <span class="partner-name">Google</span>
+                </a>
+                <a href="#" class="partner-card" target="_blank" rel="noopener noreferrer">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg" alt="Nike" class="partner-logo">
+                    <span class="partner-name">Nike</span>
+                </a>
+                <a href="#" class="partner-card" target="_blank" rel="noopener noreferrer">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg" alt="Adidas" class="partner-logo">
+                    <span class="partner-name">Adidas</span>
+                </a>
+                <a href="#" class="partner-card" target="_blank" rel="noopener noreferrer">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple" class="partner-logo">
+                    <span class="partner-name">Apple</span>
+                </a>
+                <a href="#" class="partner-card" target="_blank" rel="noopener noreferrer">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix" class="partner-logo">
+                    <span class="partner-name">Netflix</span>
+                </a>
+                <a href="#" class="partner-card" target="_blank" rel="noopener noreferrer">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify" class="partner-logo">
+                    <span class="partner-name">Spotify</span>
+                </a>
+            </div>
+        </div>
+
+        <footer>
+            &copy; 2026 Risyad Syah Rosyidi & Emma Rosyidi
+        </footer>
+
+    </div>
+
+    <!-- YOUTUBE IFRAME API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <script>
+        /* ==========================================================================
+           0. KONFIGURASI KONTAK
+           ========================================================================== */
+        const CONTACT_CONFIG = {
+            whatsappNumber: "6282114938609",
+            emailAddress: "czechindomedianetwork@gmail.com",
+            emailSubject: "Collaboration Proposal - Czechindo Business"
+        };
+
+        /* ==========================================================================
+           SOUND EFFECT GENERATOR (WEB AUDIO API)
+           ========================================================================== */
+        function playChatNotificationSound(type = 'bot') {
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (!AudioContext) return;
+                const ctx = new AudioContext();
+
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                const now = ctx.currentTime;
+
+                if (type === 'sent') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(400, now);
+                    osc.frequency.exponentialRampToValueAtTime(800, now + 0.08);
+
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+
+                    osc.start(now);
+                    osc.stop(now + 0.08);
+                } else {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(587.33, now); // D5
+                    osc.frequency.setValueAtTime(880, now + 0.08); // A5
+
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+
+                    osc.start(now);
+                    osc.stop(now + 0.25);
+                }
+            } catch (e) {
+                console.warn('AudioContext tidak didukung atau diblokir browser', e);
+            }
+        }
+
+        /* ==========================================================================
+           1. ANIMATION FOR HEADER TEXT (SVG AUTO-FIT)
+           ========================================================================== */
+        const words = ["Czechindo", "Risyad", "Emma", "Let’s Collaborate"];
+        let wordIndex = 0;
+        const brandTitle = document.getElementById("brandTitle");
+
+        function updateText() {
+            if (!brandTitle) return;
+            
+            brandTitle.classList.add("fade-out");
+            
+            setTimeout(() => {
+                wordIndex = (wordIndex + 1) % words.length;
+                const currentWord = words[wordIndex];
+                
+                brandTitle.textContent = currentWord;
+                
+                if (currentWord.length > 10) {
+                    brandTitle.setAttribute("textLength", "280");
+                    brandTitle.setAttribute("lengthAdjust", "spacingAndGlyphs");
+                } else {
+                    brandTitle.removeAttribute("textLength");
+                    brandTitle.removeAttribute("lengthAdjust");
+                }
+                
+                brandTitle.classList.remove("fade-out");
+            }, 400);
+        }
+
+        setInterval(updateText, 4500);
+
+        /* ==========================================================================
+           2. VISION POP-UP MODAL DATA & LOGIC
+           ========================================================================== */
+        const visionData = {
+            vlog: {
+                icon: "fa-solid fa-video",
+                title: "Vlog",
+                text: "Through Vlog, we capture everyday moments, personal experiences, and stories from life between two cultures, offering an authentic perspective through our own lens."
+            },
+            travel: {
+                icon: "fa-solid fa-plane",
+                title: "Travel",
+                text: "Through Travel, we explore new destinations, discover local cultures, and experience the people, places, and stories that make every journey worth remembering."
+            },
+            culture: {
+                icon: "fa-solid fa-masks-theater",
+                title: "Culture",
+                text: "Through Culture, we explore traditions, lifestyles, values, and everyday experiences that shape how people live, connect, and see the world."
+            }
+        };
+
+        function openModal(category) {
+            const modal = document.getElementById('visionModal');
+            const iconDisplay = document.getElementById('modalIconDisplay');
+            const titleDisplay = document.getElementById('modalTitleDisplay');
+            const textDisplay = document.getElementById('modalTextDisplay');
+
+            const data = visionData[category];
+            if (data && modal) {
+                iconDisplay.className = data.icon + " modal-icon";
+                titleDisplay.textContent = data.title;
+                textDisplay.textContent = data.text;
+                modal.classList.add('active');
+                modal.setAttribute('aria-hidden', 'false');
+            }
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('visionModal');
+            if (modal) {
+                modal.classList.remove('active');
+                modal.setAttribute('aria-hidden', 'true');
+            }
+        }
+
+        function closeModalOnOutside(event) {
+            const modal = document.getElementById('visionModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        /* ==========================================================================
+           3. FLOATING CHAT WIDGET LOGIC
+           ========================================================================== */
+        function toggleChatWindow() {
+            const chatWin = document.getElementById('chatWindow');
+            const icon = document.getElementById('chatWidgetIcon');
+            
+            chatWin.classList.toggle('active');
+
+            if (chatWin.classList.contains('active')) {
+                icon.className = "fa-solid fa-xmark";
+                document.getElementById('chatInput').focus();
+            } else {
+                icon.className = "fa-solid fa-comments";
+            }
+        }
+
+        function handleChatSubmit(event) {
+            event.preventDefault();
+            const input = document.getElementById('chatInput');
+            const chatBody = document.getElementById('chatBody');
+            const text = input.value.trim();
+
+            if (!text) return;
+
+            const userMsg = document.createElement('div');
+            userMsg.className = 'chat-msg user';
+            userMsg.textContent = text;
+            chatBody.appendChild(userMsg);
+
+            playChatNotificationSound('sent');
+
+            input.value = '';
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            const encodedText = encodeURIComponent(`Halo Risyad & Emma,\n\nPesan Kolaborasi:\n${text}`);
+            const waUrl = `https://wa.me/${CONTACT_CONFIG.whatsappNumber}?text=${encodedText}`;
+            const mailUrl = `mailto:${CONTACT_CONFIG.emailAddress}?subject=${encodeURIComponent(CONTACT_CONFIG.emailSubject)}&body=${encodedText}`;
+
+            setTimeout(() => {
+                const botMsg = document.createElement('div');
+                botMsg.className = 'chat-msg bot';
+                botMsg.innerHTML = `
+                    Mantap! The opportunity starts here, choose WhatsApp or Email to send your message, dekuji!
+                    <div class="chat-actions">
+                        <a href="${waUrl}" target="_blank" rel="noopener noreferrer" class="chat-action-btn btn-wa">
+                            <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                        </a>
+                        <a href="${mailUrl}" class="chat-action-btn btn-mail">
+                            <i class="fa-solid fa-envelope"></i> Email
+                        </a>
+                    </div>
+                `;
+                chatBody.appendChild(botMsg);
+                chatBody.scrollTop = chatBody.scrollHeight;
+
+                playChatNotificationSound('bot');
+            }, 500);
+        }
+
+        /* ==========================================================================
+           4. MEDIUM RSS FEED INTEGRATION
+           ========================================================================== */
+        async function fetchMediumArticles() {
+            const mediumContainer = document.getElementById('mediumArticles');
+            if (!mediumContainer) return;
+
+            const rssUrl = 'https://medium.com/feed/@risyadrosyidi';
+            const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) throw new Error('Network response failure');
+                
+                const data = await response.json();
+
+                if (data.status === 'ok' && Array.isArray(data.items) && data.items.length > 0) {
+                    mediumContainer.innerHTML = '';
+                    const articles = data.items.slice(0, 3);
+
+                    articles.forEach(article => {
+                        const tmp = document.createElement('DIV');
+                        tmp.innerHTML = article.content || article.description || '';
+                        let plainText = tmp.textContent || tmp.innerText || '';
+                        plainText = plainText.trim().substring(0, 110) + '...';
+
+                        const pubDate = new Date(article.pubDate).toLocaleDateString('id-ID', {
+                            day: 'numeric',
+                            month: 'short',
+                            year: 'numeric'
+                        });
+
+                        const articleCard = document.createElement('a');
+                        articleCard.href = article.link;
+                        articleCard.target = '_blank';
+                        articleCard.rel = 'noopener noreferrer';
+                        articleCard.className = 'article-card';
+
+                        const safeTitle = document.createElement('div');
+                        safeTitle.textContent = article.title;
+
+                        articleCard.innerHTML = `
+                            <span class="article-tag">
+                                <i class="fa-brands fa-medium"></i> MEDIUM • ${pubDate}
+                            </span>
+                            <h3 class="article-title">${safeTitle.innerHTML}</h3>
+                            <p class="article-desc">${plainText}</p>
+                            <span class="article-readmore">READ MORE <i class="fa-solid fa-arrow-right"></i></span>
+                        `;
+
+                        mediumContainer.appendChild(articleCard);
+                    });
+                } else {
+                    mediumContainer.innerHTML = '<div class="loading-text">Belum ada artikel terbaru dari Medium.</div>';
+                }
+            } catch (error) {
+                console.error('Error fetching Medium articles:', error);
+                mediumContainer.innerHTML = '<div class="loading-text">Gagal memuat artikel. Kunjungi langsung di <a href="https://risyadrosyidi.medium.com/" target="_blank" style="color: #fff; text-decoration: underline;">Medium</a>.</div>';
+            }
+        }
+
+        /* ==========================================================================
+           5. COLLABORATION FORM (MAILTO SAFEGUARD)
+           ========================================================================== */
+        function sendEmailClient(event) {
+            event.preventDefault();
+            const name = document.getElementById('clientName').value.trim();
+            const email = document.getElementById('clientEmail').value.trim();
+            let message = document.getElementById('clientMessage').value.trim();
+
+            if (!name || !email || !message) {
+                alert('Mohon isi semua bidang formulir.');
+                return;
+            }
+
+            if (message.length > 800) {
+                message = message.substring(0, 800) + "... [Pesan dipotong]";
+            }
+
+            const recipient = "risyadrosyidi@gmail.com";
+            const subject = encodeURIComponent(`Collaboration Inquiry from ${name}`);
+            const body = encodeURIComponent(`Name/Company: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
+
+            window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
+        }
+
+        /* ==========================================================================
+           6. AUDIO PLAYER (YOUTUBE EMBED)
+           ========================================================================== */
+        let player = null;
+        let isPlaying = false;
+        let isApiReady = false;
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-audio-player', {
+                height: '0',
+                width: '0',
+                videoId: 'jfKfPfyJRdk',
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0,
+                    'loop': 1,
+                    'playlist': 'jfKfPfyJRdk'
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onError': onPlayerError
+                }
+            });
+        }
+
+        function onPlayerReady() {
+            isApiReady = true;
+            if (player && typeof player.setVolume === 'function') {
+                player.setVolume(30);
+            }
+        }
+
+        function onPlayerError(event) {
+            console.warn('YouTube Player Error:', event.data);
+        }
+
+        function toggleAudio() {
+            const musicIcon = document.getElementById('musicIcon');
+            
+            if (!isApiReady || !player || typeof player.playVideo !== 'function') {
+                alert('Audio player sedang memuat, silakan coba sebentar lagi.');
+                return;
+            }
+
+            try {
+                if (isPlaying) {
+                    player.pauseVideo();
+                    musicIcon.className = "fa-solid fa-volume-xmark";
+                    isPlaying = false;
+                } else {
+                    player.playVideo();
+                    musicIcon.className = "fa-solid fa-volume-high";
+                    isPlaying = true;
+                }
+            } catch (err) {
+                console.error('Gagal mengubah status pemutar musik:', err);
+            }
+        }
+
+        /* Initialize on DOM Ready */
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchMediumArticles();
+        });
+    </script>
+</body>
+</html>
