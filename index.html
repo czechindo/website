@@ -473,6 +473,127 @@
         }
 
         /* ==========================================================================
+           6.1. OUR ACHIEVEMENTS SECTION (3D CARDS & 1x3 GRID)
+           ========================================================================== */
+        .achievements-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+            text-align: left;
+            perspective: 1000px;
+        }
+
+        @media (max-width: 768px) {
+            .achievements-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .achievement-card {
+            background: linear-gradient(145deg, rgba(15, 15, 15, 0.9) 0%, rgba(5, 5, 5, 0.95) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 16px 14px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        /* 3D Card Hover Effect: Menjadi Lebih Besar & Efek Timbul */
+        .achievement-card:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
+            z-index: 10;
+        }
+
+        /* 3 Warna Berbeda untuk Tiap Platform */
+        .achievement-card.youtube:hover {
+            border-color: #FF0000;
+            box-shadow: 0 15px 35px rgba(255, 0, 0, 0.25);
+        }
+        .achievement-card.youtube .ach-icon {
+            color: #FF0000;
+        }
+        .achievement-card.youtube .ach-value {
+            color: #FF0000;
+        }
+
+        .achievement-card.instagram:hover {
+            border-color: #ffffff;
+            box-shadow: 0 15px 35px rgba(255, 255, 255, 0.2);
+        }
+        .achievement-card.instagram .ach-icon {
+            color: #ffffff;
+        }
+        .achievement-card.instagram .ach-value {
+            color: #ffffff;
+        }
+
+        .achievement-card.tiktok:hover {
+            border-color: #0055DA;
+            box-shadow: 0 15px 35px rgba(0, 242, 254, 0.25);
+        }
+        .achievement-card.tiktok .ach-icon {
+            color: #0055DA;
+        }
+        .achievement-card.tiktok .ach-value {
+            color: #0055DA;
+        }
+
+        .ach-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 8px;
+        }
+
+        .ach-icon {
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .ach-platform-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #ffffff;
+        }
+
+        .ach-stats-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .ach-stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ach-value {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            transition: color 0.3s ease;
+        }
+
+        .ach-label {
+            font-size: 0.62rem;
+            color: #aaaaaa;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        /* ==========================================================================
            7. ARTICLES & SOCIAL LINKS
            ========================================================================== */
         .articles-container {
@@ -1235,6 +1356,99 @@
             </div>
         </div>
 
+        <!-- OUR ACHIEVEMENTS SECTION (1x3 GRID & 3D CARDS) -->
+        <div class="divider">
+            <span>OUR ACHIEVEMENTS</span>
+        </div>
+
+        <div class="achievements-container">
+            <!-- YouTube Card (Red Accent) -->
+            <div class="achievement-card youtube">
+                <div class="ach-header">
+                    <i class="fa-brands fa-youtube ach-icon"></i>
+                    <h3 class="ach-platform-title">YouTube</h3>
+                </div>
+                <div class="ach-stats-list">
+                    <div class="ach-stat-item">
+                        <span class="ach-value" data-target="1.1" data-suffix="K+" data-decimals="1">0</span>
+                        <span class="ach-label">Subscribers</span>
+                    </div>
+                    <div class="ach-stat-item">
+                        <span class="ach-value" data-target="65.5" data-suffix="K+" data-decimals="1">0</span>
+                        <span class="ach-label">Total Views</span>
+                    </div>
+                    <div class="ach-stat-item">
+                        <span class="ach-value" data-target="7.3" data-suffix="H+" data-decimals="1">0</span>
+                        <span class="ach-label">Watch Time</span>
+                    </div>
+                    <div class="ach-stat-item">
+                        <span class="ach-value" data-target="1.5" data-suffix="K" data-decimals="1">0</span>
+                        <span class="ach-label">Impression</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Instagram Card (White/Silver Accent) -->
+            <div class="achievement-card instagram">
+                <div class="ach-header">
+                    <i class="fa-brands fa-instagram ach-icon"></i>
+                    <h3 class="ach-platform-title">Instagram</h3>
+                </div>
+                <div class="ach-stats-list">
+                    <div class="ach-stat-item">
+                        <span class="ach-value" data-target="2.3" data-suffix="K+" data-decimals="0">0</span>
+                        <span class="ach-label">Followers</span>
+                    </div>
+                    <div class="ach-stat-item">
+                        <span class="ach-value" data-target="22.9" data-suffix="M+" data-decimals="1">0</span>
+                        <span class="ach-label">Impressions</span>
+                    </div>
+                    <div class="ach-stat-item">
+                        <span class="ach-value" data-target="8.4" data-suffix="M+" data-decimals="1">0</span>
+                        <span class="ach-label">Reach</span>
+                    </div>
+                    <div class="ach-stat-item">
+                        <span class="ach-value" data-target="0.22" data-suffix="%" data-decimals="2">0</span>
+                        <span class="ach-label">Engagement Rate</span>
+                    </div>
+                    <div class="ach-stat-item">
+                        <span class="ach-value" data-target="10" data-suffix="%" data-decimals="0">0</span>
+                        <span class="ach-label">Monthly Growth</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TikTok Card (Navy Blue Accent) -->
+            <div class="achievement-card tiktok">
+                <div class="ach-header">
+                    <i class="fa-brands fa-tiktok ach-icon"></i>
+                    <h3 class="ach-platform-title">TikTok</h3>
+                </div>
+                <div class="ach-stats-list">
+                    <div class="ach-stat-item">
+                        <span class="ach-value" data-target="716" data-suffix="K+" data-decimals="0">0</span>
+                        <span class="ach-label">Followers</span>
+                    </div>
+                    <div class="ach-stat-item">
+                        <span class="ach-value" data-target="57.3" data-suffix="M+" data-decimals="1">0</span>
+                        <span class="ach-label">Video Views / month</span>
+                    </div>
+                    <div class="ach-stat-item">
+                        <span class="ach-value" data-target="345" data-suffix="K+" data-decimals="0">0</span>
+                        <span class="ach-label">Profile Views / month</span>
+                    </div>
+                    <div class="ach-stat-item">
+                        <span class="ach-value" data-target="2.8" data-suffix="M+" data-decimals="1">0</span>
+                        <span class="ach-label">Engagement / month</span>
+                    </div>
+                    <div class="ach-stat-item">
+                        <span class="ach-value" data-target="30" data-suffix="%" data-decimals="0">0</span>
+                        <span class="ach-label">Monthly Growth</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- MEDIUM ARTICLES SECTION -->
         <div class="divider">
             <span>LATEST ARTICLES</span>
@@ -1582,6 +1796,58 @@
         }
 
         /* ==========================================================================
+           3.1. ANIMATED NUMBERS (MEDIUM SPEED COUNTER) FOR ACHIEVEMENTS
+           ========================================================================== */
+        function animateCounters() {
+            const counters = document.querySelectorAll('.ach-value');
+            const speed = 150; // Kecepatan medium counter
+
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const suffix = counter.getAttribute('data-suffix') || '';
+                const decimals = +counter.getAttribute('data-decimals') || 0;
+                
+                let current = 0;
+                const increment = target / speed;
+
+                const updateCount = () => {
+                    current += increment;
+                    if (current < target) {
+                        counter.textContent = current.toFixed(decimals) + suffix;
+                        setTimeout(updateCount, 25);
+                    } else {
+                        counter.textContent = target.toFixed(decimals) + suffix;
+                    }
+                };
+                updateCount();
+            });
+        }
+
+        // Trigger animation when achievements section is visible
+        const observerOptions = {
+            root: null,
+            threshold: 0.2
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchMediumArticles();
+            
+            const achievementsSection = document.querySelector('.achievements-container');
+            if (achievementsSection) {
+                observer.observe(achievementsSection);
+            }
+        });
+
+        /* ==========================================================================
            4. MEDIUM RSS FEED INTEGRATION
            ========================================================================== */
         async function fetchMediumArticles() {
@@ -1725,11 +1991,6 @@
                 console.error('Gagal mengubah status pemutar musik:', err);
             }
         }
-
-        /* Initialize on DOM Ready */
-        document.addEventListener('DOMContentLoaded', () => {
-            fetchMediumArticles();
-        });
     </script>
 </body>
 </html>
